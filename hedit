@@ -1,0 +1,26 @@
+
+from astropy.time import Time
+import glob
+from astropy.io import fits
+
+
+keys='DATE'
+
+hdu=0
+
+path="/mnt/wwn-0x5001b444a4ec7c48/fits_test/"
+
+DATE=[]
+
+data=[]
+
+fitsname=[] 
+
+for fitsName in glob.glob(path+'*.fits'):
+    header1=fits.getheader(fitsName,hdu)
+    data=header1.get(keys)
+    DATE.append(data)
+    fitsname.append(fitsName)
+    t=Time(data)
+    tt=t.mjd
+    fits.setval(fitsName,'DATE',value=tt)
